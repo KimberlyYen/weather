@@ -46,14 +46,17 @@ li {
   background-color: gold;
 }
 .lowTemp {
-  color: red;
+  color: crimson;
+}
+.rankList {
+  color: saddlebrown;
 }
 button {
   margin-top: 20px;
   border: none;
-  background-color: rgb(100, 44, 18);
+  background-color: saddlebrown;
   color: white;
-  padding: 5px 10px;
+  padding: 5px 15px;
   cursor: pointer;
 }
 .answer {
@@ -62,5 +65,4 @@ button {
 }
 .title_answer {
   background-color: white;
-  margin-top: 5px;
 }

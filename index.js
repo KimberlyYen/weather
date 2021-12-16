@@ -5,7 +5,6 @@ fetch(
     return response.json();
   })
   .then(function (data) {
-    // console.log(data);
     pullAlldata(data);
     allData(data);
     findTempMin(data);
@@ -47,7 +46,10 @@ function findTempMin(data) {
   });
   const today = new Date();
   document.getElementById("examOne_answer").innerHTML = `
-  <li><span class="title_answer">現在時間</span> ${today}</li>  <br>
+  <li>
+  <span class="title_answer">現在時間</span> 
+  <span class="title_answer">${today}</span>
+  </li>  <br>
   <li>City  ${oneOfLocation.parameter[0].parameterValue}</li>
   <li>Town  ${oneOfLocation.parameter[2].parameterValue}</li>
   <li>Name  ${oneOfLocation.locationName}</li>
@@ -85,7 +87,7 @@ function findMountain(data) {
   document.getElementById("examTwo_answer").innerHTML = `
   <li>
     <span class="title_answer"> 
-    ${elevationSection[0]} 公尺 
+      ${elevationSection[0]} 公尺 
     </span>
   </li>
   <li>最低溫測站 ${lowestWeather[0].locationName} </li>
@@ -93,57 +95,41 @@ function findMountain(data) {
   `;
 }
 
-// function findRainTop(data) {
-//   let pullAlldataArray = pullAlldata(data);
-//   // pullAlldataArray.forEach((element) => console.log(element.weatherElement[6].elementValue));
-//   let rainArrayValue = [];
-//   for (i = 0; i < pullAlldataArray.length; i++) {
-//     let rainValue = pullAlldataArray[i].weatherElement[6];
-//     rainArrayValue.push(rainValue);
-//   }
-//   console.log(rainArrayValue);
-
-//   // sort
-//   rainArrayValue.sort(function (a, b) {
-//     return a - b;
-//   });
-
-//   for (i = 0; i < 20; i++) {
-//     // https://ithelp.ithome.com.tw/articles/10220462
-//     console.log(rainArrayValue[i]);
-//   }
-// }
-
 function findRainTop(data) {
   let pullAlldataArray = pullAlldata(data);
-  // console.log(pullAlldataArray);
-  let rainObj = [];
+  let array = [];
 
+  // Get the name and value become an object and put in array
   for (i = 0; i < pullAlldataArray.length; i++) {
     let res = pullAlldataArray[i].parameter[0];
     let rainValue = pullAlldataArray[i].weatherElement[6];
+    let obj = Object.assign({}, res, rainValue);
+    array.push(obj);
+  }
+  // Rank
+  array.sort(function (a, b) {
+    return b.elementValue - a.elementValue;
+  });
 
-    if (rainValue.elementValue !== "-99") {
-      let obj = Object.assign({}, res, rainValue);
-    }
-    console.log(obj);
+  for (var i = 0; i < 20; i++) {
+    array[i].rank = i + 1;
+    document.getElementById("examThree_answer").innerHTML += `
+    <li>
+      <span class="rankList">
+        ${array[i].rank}
+      </span>
+        ${array[i].parameterName}
+        ${array[i].parameterValue}
+        ${array[i].elementName}
+      <span class="lowTemp">
+        ${array[i].elementValue}
+      <span>
+    </li>
+    `;
   }
 
-  // function f() {
-  //   return Array.from(obj3);
-  // }
-  // console.log(f(obj3));
-
-  // // sort by value
-  // obj3.sort(function (a, b) {
-  //   return a.value - b.value;
-  // });
-
-  // obj印值出來
-  // for (const {
-  //   name: n,
-  //   parameter: { parameterName: f },
-  // } of obj3) {
-  //   console.log("Name: " + n + ", Father: " + f);
-  // }
+  console.log(array);
+  // document.getElementById("examThree_answer").innerHTML += `
+  // <li></li>
+  // `
 }
