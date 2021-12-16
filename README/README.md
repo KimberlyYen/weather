@@ -4,6 +4,7 @@
 
 - [氣象局開放資料清單](https://opendata.cwb.gov.tw/dist/opendata-swagger.html?urls.primaryName=openAPI)
 - [自動氣象站-氣象觀測資料格式](https://opendata.cwb.gov.tw/opendatadoc/DIV2/A0001-001.pdf)
+- [中央氣象局氣象資料開放平臺 – 資料擷取使用說明](chrome-extension://bocbaocobfecmglnmeaeppambideimao/pdf/viewer.html?file=https%3A%2F%2Fopendata.cwb.gov.tw%2Fopendatadoc%2FCWB_Opendata_API_V1.2.pdf)
 - [申請帳號取得 token](https://opendata.cwb.gov.tw/user/authkey)
 
 ### 上傳格式

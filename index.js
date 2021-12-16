@@ -10,6 +10,21 @@ fetch(
     findTempMin(data);
     findMountain(data);
     findRainTop(data);
+    expectMyLocationFuture(data);
+  })
+  .catch(function (err) {
+    console.log(err);
+  });
+
+fetch(
+  "https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-D0047-063?Authorization=CWB-1E70461D-B346-4378-A55A-DB337F9BD7C5&locationName=%E5%85%A7%E6%B9%96%E5%8D%80&elementName=MinCI&sort=time&startTime=&dataTime=&timeFrom=2021-12-16T09%3A24%3A37&timeTo=2021-12-23T09%3A24%3A43"
+)
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function (data) {
+    expectMyLocationFuture(data);
+    console.log(data);
   })
   .catch(function (err) {
     console.log(err);
@@ -83,7 +98,8 @@ function findMountain(data) {
     "3000-3500",
     "3500-3860",
   ];
-  // console.log(elevationSection[0]);
+
+  // Show
   document.getElementById("examTwo_answer").innerHTML = `
   <li>
     <span class="title_answer"> 
@@ -127,9 +143,6 @@ function findRainTop(data) {
     </li>
     `;
   }
-
-  console.log(array);
-  // document.getElementById("examThree_answer").innerHTML += `
-  // <li></li>
-  // `
 }
+
+function expectMyLocationFuture(data) {}
