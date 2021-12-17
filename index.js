@@ -177,14 +177,16 @@ function findRainTop(data) {
 }
 
 function expectFutureMaxT(data) {
-  // console.log(data);
   const weatherElement = data.records.locations[0].location[0].weatherElement;
   const maxDescription = weatherElement[12].description;
   const minDescription = weatherElement[8].description;
+  const maxTempObject = weatherElement[12].time;
+  const minTempObject = weatherElement[8].time;
+  const maxTArray = [];
+  const minTArray = [];
+  const gapTArray = [];
 
-  function findTheMaxT(data) {
-    const maxTempObject = weatherElement[12].time;
-    let maxTArray = [];
+  function findTheMaxT() {
     for (i = 0; i < maxTempObject.length; i++) {
       let maxTObjectValue = maxTempObject[i].elementValue[0].value;
       maxTArray.push(maxTObjectValue);
@@ -193,9 +195,7 @@ function expectFutureMaxT(data) {
     return max;
   }
 
-  function findTheMinT(data) {
-    const minTempObject = weatherElement[8].time;
-    let minTArray = [];
+  function findTheMinT() {
     for (i = 0; i < minTempObject.length; i++) {
       let minTObjectValue = minTempObject[i].elementValue[0].value;
       minTArray.push(minTObjectValue);
@@ -206,41 +206,23 @@ function expectFutureMaxT(data) {
   const findTheMinTtemp = findTheMinT(data);
   const findTheMaxTtemp = findTheMaxT(data);
 
+  function findTGap() {
+    for (i = 0; i < maxTempObject.length; i++) {
+      let maxTObjectValue = maxTempObject[i].elementValue[0].value;
+      let minTObjectValue = minTempObject[i].elementValue[0].value;
+      gapTArray.push(maxTObjectValue - minTObjectValue);
+    }
+    const max = Math.max(...gapTArray);
+    return max;
+  }
+  let findTempGap = findTGap();
+
   document.getElementById("examFour_answer").innerHTML = `
-  <li> 未來一週氣溫 </li>
+  <li class="title_answer"> 台北市/內湖區 </li>
+  <li class="title_answer"> 未來一週氣溫 </li>
   <li>${minDescription} <span class="lowTemp"> ${findTheMinTtemp} </span></li>
   <li>${maxDescription} <span class="lowTemp"> ${findTheMaxTtemp} </span></li>
+  <li class="title_answer"> 單日溫差最大 </li>
+  <li>攝氏度<span class="lowTemp"> ${findTempGap} </span>度</li>
   `;
 }
-
-// function expectMyLocationFuture(data) {
-//   const futureTimeObject =
-//     data.records.locations[0].location[0].weatherElement[0].time;
-//   const newArray = [];
-//   const today = new Date();
-//   console.log(data);
-
-//   for (i = 0; i < futureTimeObject.length; i++) {
-//     let futureString = futureTimeObject[i].elementValue[0].value;
-//     let res = Number(futureString);
-//     newArray.push(res);
-//   }
-//   const min = Math.min(...newArray);
-//   const max = Math.max(...newArray);
-
-//   document.getElementById("examFour_answer").innerHTML = `
-//   <li class="title_answer">未來一週氣溫</li>
-//   <li> 今天日期：
-//   ${today.getFullYear()}年 ${today.getMonth() + 1} 月 ${today.getDate()} 日
-//   </li>
-//   <li> 截止日期：
-//   ${today.getFullYear()}年 ${today.getMonth() + 1} 月 ${today.getDate() + 6} 日
-//   </li>
-//   <li class="title_answer">${data.records.locations[0].locationsName} / ${
-//     data.records.locations[0].location[0].locationName
-//   }</li>
-//   <li>最低溫 <span class="lowTemp"> ${min} </span></li>
-//   <li>最高溫 <span class="lowTemp"> ${max} </span></li>
-//   <li class="title_answer">單日溫差最大</li>
-//   `;
-// }
